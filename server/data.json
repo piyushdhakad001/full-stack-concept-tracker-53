@@ -1,0 +1,487 @@
+{
+  "definition": [
+    {
+      "title": "CSS Box Model",
+      "definition": "Every HTML element is a box made of 4 layers: content, padding, border, margin.",
+      "analogy": "A framed photo on a wall. The photo is the content, the white gap around it is the padding, the frame is the border, and the space to the next frame is the margin.",
+      "why": "The browser needs a way to calculate each element's size and spacing on the page.",
+      "how": "Content holds the text or image.\nPadding adds space inside the border.\nMargin adds space outside the border.",
+      "example": "div {\n  width: 100px; padding: 10px;\n  border: 2px solid;\n  margin: 20px;\n}\n/* Total width = 100+20+4 = 124px */",
+      "interview": "The box model says every element is content plus padding plus border plus margin, and it decides the element's final size."
+    },
+    {
+      "title": "Middleware",
+      "definition": "A function that runs between the request and the response in a server.",
+      "analogy": "Security check at an airport. Every passenger passes through the check before boarding.",
+      "why": "To do common jobs (login check, logging, reading JSON) in one place instead of repeating them in every route.",
+      "how": "Request arrives.\nMiddleware does its job, then calls next().\nThe route sends the response.",
+      "example": "app.use((req, res, next) => {\n  console.log(req.method, req.url);\n  next();\n});",
+      "interview": "Middleware in Express is a function with access to req, res, and next, used for tasks like authentication, logging, and parsing."
+    },
+    {
+      "title": "CORS",
+      "definition": "A browser security rule that blocks a website from calling another website's server unless that server allows it.",
+      "analogy": "A society guard who lets in only visitors whose names are on the approved list.",
+      "why": "To stop a malicious website from secretly reading your data from another site.",
+      "how": "Frontend (localhost:3000) calls backend (localhost:5000).\nBrowser checks if the backend allows that origin.\nIf not allowed, the browser blocks the response.",
+      "example": "const cors = require(\"cors\");\napp.use(cors({ origin: \"http://localhost:3000\" }));",
+      "interview": "CORS is a browser security feature, and I fix it by configuring the backend to allow the frontend's origin."
+    },
+    {
+      "title": "REST",
+      "definition": "A set of rules for designing APIs so the frontend and backend talk using URLs and HTTP methods.",
+      "analogy": "A restaurant menu. You order by item name (URL) and action (GET to see, POST to place an order).",
+      "why": "To make APIs simple, predictable, and the same for everyone.",
+      "how": "Each thing (users, products) has its own URL.\nHTTP methods say the action (GET, POST, PUT, DELETE).\nThe server replies with data, usually JSON.",
+      "example": "GET /users -> get all users\nPOST /users -> create a user\nDELETE /users/5 -> delete user 5",
+      "interview": "REST is an architecture style where resources are accessed through URLs and standard HTTP methods, and each request is stateless."
+    },
+    {
+      "title": "Virtual DOM",
+      "definition": "A lightweight copy of the real page (DOM) kept in memory by React.",
+      "analogy": "A teacher checks a rough draft first and corrects only the wrong lines, instead of rewriting the whole page.",
+      "why": "Updating the real DOM is slow. The Virtual DOM reduces the work.",
+      "how": "State changes, so React makes a new Virtual DOM.\nReact compares it with the old one (diffing).\nOnly the changed parts update in the real DOM.",
+      "example": "// Only the <p> text updates, not the whole page\n<p>Count: {count}</p>",
+      "interview": "The Virtual DOM is React's in-memory copy of the DOM, which finds the minimum changes and updates only those, making the UI fast."
+    },
+    {
+      "title": "useState and useEffect",
+      "definition": "useState stores data that can change. useEffect runs code after the screen updates.",
+      "analogy": "useState is a whiteboard in class where you can erase and rewrite. useEffect is the teacher who reacts after the board changes (\"Oh, the score changed, let me note it down\").",
+      "why": "Normal variables don't update the screen, and React needs a safe place for side work like API calls.",
+      "how": "useState gives a value and a function to change it.\nChanging it re-renders the component.\nuseEffect runs after render, and the dependency array [] controls when.",
+      "example": "const [count, setCount] = useState(0);\nuseEffect(() => {\n  document.title = count;\n}, [count]);",
+      "interview": "useState holds changing data in a component, and useEffect handles side effects like API calls whenever its dependencies change."
+    },
+    {
+      "title": "Node.js",
+      "definition": "A tool that lets you run JavaScript outside the browser, on a server.",
+      "analogy": "A chef who can cook in any kitchen, not just the one at home. JavaScript was only in the browser kitchen, and Node gives it a restaurant kitchen.",
+      "why": "So developers can use one language (JavaScript) for both frontend and backend.",
+      "how": "Node uses Chrome's V8 engine to run JS.\nIt handles many requests without waiting (non-blocking).\nIt runs on a single thread with an event loop.",
+      "example": "const http = require(\"http\");\nhttp.createServer((req, res) => {\n  res.end(\"Hello\");\n}).listen(3000);",
+      "interview": "Node.js is a JavaScript runtime built on the V8 engine that lets me build fast, non-blocking backend servers using JavaScript."
+    },
+    {
+      "title": "Responsive Design",
+      "definition": "Making a website look good on every screen size: phone, tablet, laptop.",
+      "analogy": "Water takes the shape of any glass you pour it into.",
+      "why": "People use many different devices, and one fixed layout breaks on small screens.",
+      "how": "Use flexible units (%, rem) instead of fixed pixels.\nUse Flexbox or Grid for layouts.\nUse media queries to change styles at certain screen widths.",
+      "example": ".box { width: 50%; }\n@media (max-width: 600px) {\n  .box { width: 100%; }\n}",
+      "interview": "Responsive design makes one website adapt to any screen size using flexible layouts and media queries."
+    },
+    {
+      "title": "Semantic HTML",
+      "definition": "Using HTML tags that describe the meaning of the content, not just how it looks.",
+      "analogy": "Labeled boxes in a store (Kitchen, Toys, Clothes) instead of plain boxes with no labels.",
+      "why": "It helps search engines (SEO), screen readers (accessibility), and other developers understand the page.",
+      "how": "Use meaningful tags like <header>, <nav>, <main>, <footer>.\nAvoid using <div> for everything.\nBrowsers and tools read the tags and understand the structure.",
+      "example": "<header>My Site</header>\n<nav>Menu</nav>\n<main>Content</main>\n<footer>Contact</footer>",
+      "interview": "Semantic HTML uses meaningful tags like header and main, which improves accessibility, SEO, and code readability."
+    },
+    {
+      "title": "Event Loop",
+      "definition": "The system that lets JavaScript do many tasks even though it can do only one thing at a time.",
+      "analogy": "A single waiter in a restaurant. He takes your order, gives it to the kitchen, and serves other tables meanwhile. When the food is ready, he delivers it.",
+      "why": "JavaScript is single-threaded, and without the event loop, slow tasks (like API calls) would freeze everything.",
+      "how": "Normal code runs first in the call stack.\nSlow tasks (timers, API calls) go to the background.\nWhen the stack is empty, the event loop moves finished tasks back to run.",
+      "example": "console.log(\"A\");\nsetTimeout(() => console.log(\"B\"), 0);\nconsole.log(\"C\");\n// Output: A C B",
+      "interview": "The event loop lets single-threaded JavaScript handle async tasks by moving completed callbacks to the call stack when it is empty."
+    },
+    {
+      "title": "Closures",
+      "definition": "A function that remembers the variables from the place where it was created, even after that place has finished running.",
+      "analogy": "A school bag. You carry it wherever you go, and it still holds your books from home.",
+      "why": "To keep data private and remember values between function calls.",
+      "how": "An outer function creates a variable.\nAn inner function uses that variable.\nThe inner function keeps access to it even after the outer function ends.",
+      "example": "function counter() {\n  let c = 0;\n  return () => ++c;\n}\nconst next = counter();\nnext(); // 1\nnext(); // 2",
+      "interview": "A closure is a function that remembers variables from its outer scope even after the outer function has finished, which I use for private data."
+    },
+    {
+      "title": "Callbacks (Callback Hell)",
+      "definition": "A callback is a function you pass to another function to run later. Callback hell is when callbacks are nested so deep that the code becomes hard to read.",
+      "analogy": "Telling a friend, \"Call me when you reach home.\" Callback hell is a chain: \"Call him, he calls her, she calls them...\"",
+      "why": "Async tasks (API calls, timers) take time, so we need a way to run code after they finish.",
+      "how": "You pass a function into an async task.\nThe task finishes.\nJavaScript calls your function with the result.\nFix: use Promises or async/await to flatten the nesting.",
+      "example": "getUser(id, (user) => {\n  getOrders(user, (orders) => {\n    getPay(orders, (pay) => {}); // hell\n  });\n});",
+      "interview": "A callback runs after a task finishes, and I avoid callback hell by using Promises or async/await for cleaner, flatter code."
+    },
+    {
+      "title": "Event Bubbling",
+      "definition": "When you click an element, the event runs on it first, then moves up through its parents.",
+      "analogy": "A bubble in water that rises from the bottom to the top. A click starts at the inner element and rises to the outer ones.",
+      "why": "It lets parent elements also react to events from their children.",
+      "how": "You click a button inside a div.\nThe button's click handler runs first.\nThen the div's handler runs, then the body's.\nUse stopPropagation() to stop it.",
+      "example": "div.onclick = () => console.log(\"div\");\nbtn.onclick = () => console.log(\"btn\");\n// Click btn -> btn, then div",
+      "interview": "Event bubbling means an event travels from the clicked element up to its parents, and I can stop it with stopPropagation."
+    },
+    {
+      "title": "Express.js",
+      "definition": "A small framework for Node.js that makes building servers and APIs easy.",
+      "analogy": "Node.js is a raw kitchen with an empty space. Express is the ready-made counter, stove, and shelves that help you cook faster.",
+      "why": "Building a server with plain Node needs a lot of repeated code. Express makes routing and middleware simple.",
+      "how": "You create an app.\nYou define routes (URL plus method).\nEach route sends a response.",
+      "example": "const express = require(\"express\");\nconst app = express();\napp.get(\"/\", (req, res) => res.send(\"Hi\"));\napp.listen(3000);",
+      "interview": "Express.js is a lightweight Node.js framework that simplifies routing, middleware, and building REST APIs."
+    },
+    {
+      "title": "Indexing",
+      "definition": "A shortcut structure in a database that helps find data faster.",
+      "analogy": "The index page at the back of a book. You find a topic instantly instead of reading every page.",
+      "why": "Without an index, the database checks every row, which is slow for big data.",
+      "how": "You create an index on a column (like email).\nThe database keeps a sorted lookup for it.\nSearches on that column become much faster.\nTrade-off: writes get slightly slower and it uses more space.",
+      "example": "CREATE INDEX idx_email ON users(email);\nSELECT * FROM users WHERE email = 'a@b.com';",
+      "interview": "An index speeds up data searches by avoiding a full table scan, at the cost of extra storage and slightly slower writes."
+    },
+    {
+      "title": "Normalization",
+      "definition": "Organizing database tables so the same data is not stored again and again.",
+      "analogy": "Instead of writing your full address on every school form, you keep it in one place and just write your student ID everywhere else.",
+      "why": "Repeated data wastes space and causes mistakes. If you change it in one place and forget another, the data becomes wrong.",
+      "how": "Split big tables into smaller related tables.\nGive each table a primary key.\nConnect tables using foreign keys.",
+      "example": "Bad: orders(id, item, customer_name, customer_city)\nGood: customers(id, name, city)\n      orders(id, item, customer_id)",
+      "interview": "Normalization organizes data into related tables to remove duplication and keep the data consistent."
+    },
+    {
+      "title": "Hoisting",
+      "definition": "JavaScript moves declarations to the top of their scope before running the code.",
+      "analogy": "A teacher reads the full attendance list before class starts, so she already knows every name when the lesson begins.",
+      "why": "It happens because JavaScript reads the whole code first (creation phase) and then runs it.",
+      "how": "var is hoisted and set to undefined.\nlet and const are hoisted but cannot be used before their line (error).\nFunction declarations are fully hoisted, so you can call them early.",
+      "example": "console.log(a); // undefined\nvar a = 5;\nsayHi(); // works\nfunction sayHi() { console.log(\"Hi\"); }",
+      "interview": "Hoisting means declarations move to the top of their scope. var gives undefined, let and const throw an error, and function declarations work fully."
+    },
+    {
+      "title": "this Keyword",
+      "definition": "this points to the object that is calling the function.",
+      "analogy": "The word \"I\". It means a different person depending on who is speaking.",
+      "why": "It lets one function work with different objects.",
+      "how": "Inside an object method, this is that object.\nIn a normal function, this is the global object (or undefined in strict mode).\nArrow functions have no own this; they use the this of the outside code.",
+      "example": "const user = {\n  name: \"Piyush\",\n  hi() { console.log(this.name); }\n};\nuser.hi(); // Piyush",
+      "interview": "this refers to the object calling the function, and arrow functions take this from their surrounding scope."
+    },
+    {
+      "title": "Keys in React Lists",
+      "definition": "A unique ID you give each item when showing a list in React.",
+      "analogy": "Roll numbers in a class. The teacher finds and updates the right student even if the seating order changes.",
+      "why": "React needs to know which item changed, was added, or was removed, so it updates only that item.",
+      "how": "You add a key to each list item.\nOn re-render, React matches items by key.\nOnly the changed items update.\nUse a stable ID, not the array index if the list can change.",
+      "example": "{users.map(u => (\n  <li key={u.id}>{u.name}</li>\n))}",
+      "interview": "Keys are unique IDs that help React identify which list items changed, so it re-renders efficiently and avoids bugs."
+    },
+    {
+      "title": "Event Delegation",
+      "definition": "Putting one event listener on a parent to handle clicks of all its children.",
+      "analogy": "One receptionist at the gate handles all visitors, instead of hiring a guard for every room.",
+      "why": "Adding a listener to every child is slow and misses items added later.",
+      "how": "Add one listener on the parent.\nA child click bubbles up to the parent.\nCheck event.target to see which child was clicked.",
+      "example": "list.addEventListener(\"click\", (e) => {\n  if (e.target.tagName === \"LI\")\n    console.log(e.target.textContent);\n});",
+      "interview": "Event delegation uses event bubbling to handle many child events with one parent listener, which is faster and works for dynamically added elements."
+    },
+    {
+      "title": "What is the DOM",
+      "definition": "The DOM (Document Object Model) is a tree of objects that the browser builds from your HTML, so JavaScript can read and change the page.",
+      "analogy": "A family tree. The page is the root, and every tag is a parent, child, or sibling.",
+      "why": "HTML is just text. JavaScript needs a structure it can find, change, add to, or delete from.",
+      "how": "Browser reads the HTML.\nBrowser builds a tree of elements.\nJavaScript finds an element and changes it, and the screen updates.",
+      "example": "const h = document.querySelector(\"h1\");\nh.textContent = \"Hello\";\nh.style.color = \"red\";",
+      "interview": "The DOM is the browser's tree representation of the HTML page, which JavaScript uses to read and update content, styles, and structure."
+    },
+    {
+      "title": "What is an API",
+      "definition": "An API (Application Programming Interface) is a way for one software to ask another software for data or actions.",
+      "analogy": "A waiter. You don't enter the kitchen. You tell the waiter your order, and he brings the food.",
+      "why": "Apps need to share data safely without exposing their inner code or database.",
+      "how": "Client sends a request to a URL.\nServer processes it.\nServer sends back a response, usually JSON.",
+      "example": "fetch(\"/api/users\")\n  .then(r => r.json())\n  .then(data => console.log(data));",
+      "interview": "An API is an interface that lets two applications communicate, for example my React frontend requesting data from my Node backend."
+    },
+    {
+      "title": "What is CRUD",
+      "definition": "The 4 basic actions on data: Create, Read, Update, Delete.",
+      "analogy": "A contacts app on your phone. You add a contact, view it, edit it, or delete it.",
+      "why": "Almost every app (social media, shopping, notes) is built on these 4 actions.",
+      "how": "Create = POST\nRead = GET\nUpdate = PUT / PATCH\nDelete = DELETE",
+      "example": "POST /notes -> create a note\nGET /notes -> read all notes\nPUT /notes/1 -> update note 1\nDELETE /notes/1 -> delete note 1",
+      "interview": "CRUD stands for Create, Read, Update, Delete, the four basic data operations that map to POST, GET, PUT/PATCH, and DELETE in a REST API."
+    },
+    {
+      "title": "What is package.json",
+      "definition": "A file in a Node project that stores the project's details and the list of packages it needs.",
+      "analogy": "A recipe card. It lists the dish name, the ingredients (packages), and the steps to cook (scripts).",
+      "why": "Anyone can run npm install and get the same setup, without sharing the huge node_modules folder.",
+      "how": "npm init creates the file.\nnpm install express adds it under dependencies.\nscripts holds commands like npm start.",
+      "example": "{\n  \"name\": \"my-app\",\n  \"scripts\": { \"start\": \"node index.js\" },\n  \"dependencies\": { \"express\": \"^4.18.0\" }\n}",
+      "interview": "package.json holds my project's metadata, dependencies, and scripts, so anyone can install and run the project with npm."
+    },
+    {
+      "title": "MVC Architecture",
+      "definition": "A way to organize code into 3 parts: Model (data), View (UI), Controller (logic).",
+      "analogy": "A restaurant. The kitchen storage is the Model, the dining table and menu is the View, and the waiter who connects them is the Controller.",
+      "why": "Separating the parts keeps code clean, easy to test, and easy to change.",
+      "how": "User action goes to the Controller.\nController asks the Model for data.\nController sends the data to the View, which shows it.",
+      "example": "Model: User schema (Mongoose)\nView: React page / HTML\nController: getUsers() function",
+      "interview": "MVC separates an app into Model for data, View for UI, and Controller for logic, which makes the code organized and maintainable."
+    },
+    {
+      "title": "What is MongoDB",
+      "definition": "A NoSQL database that stores data as flexible JSON-like documents instead of rows and columns.",
+      "analogy": "A file cabinet with folders. Each folder (document) holds one person's papers, and different folders can have different papers inside.",
+      "why": "Not all data fits neatly into tables. MongoDB is flexible and easy to change as your app grows.",
+      "how": "A database holds collections (like tables).\nA collection holds documents (like rows).\nEach document is a JSON-like object with its own fields.",
+      "example": "db.users.insertOne({\n  name: \"Piyush\",\n  city: \"Bhopal\"\n});\ndb.users.find({ city: \"Bhopal\" });",
+      "interview": "MongoDB is a NoSQL database that stores data as flexible JSON-like documents in collections, which works well with Node.js and JavaScript apps."
+    },
+    {
+      "title": "What is Full Stack Development",
+      "definition": "Building both the part users see (frontend) and the part that runs behind the scenes (backend and database).",
+      "analogy": "Running a restaurant fully. You handle the dining area (frontend), the kitchen (backend), and the storage room (database).",
+      "why": "One developer who understands every layer can build and fix a complete app end to end.",
+      "how": "Frontend: HTML, CSS, JavaScript, React.\nBackend: Node.js, Express, APIs.\nDatabase: MongoDB or SQL.",
+      "example": "React form -> POST /api/users\nExpress saves it -> MongoDB\nExpress replies -> React shows result",
+      "interview": "Full stack development means building the frontend, backend, and database of an application, and connecting them into one working product."
+    },
+    {
+      "title": "CI/CD",
+      "definition": "CI (Continuous Integration) automatically tests your code on every push. CD (Continuous Deployment) automatically releases it to users.",
+      "analogy": "A factory assembly line with auto-checks. Every product is inspected, and if it passes, it goes straight to the shop.",
+      "why": "Manual testing and uploading are slow and cause mistakes. Automation catches bugs early and ships faster.",
+      "how": "You push code to GitHub.\nTests and build run automatically (CI).\nIf they pass, the app deploys automatically (CD).",
+      "example": "# GitHub Actions\non: push\njobs:\n  test:\n    steps:\n      - run: npm install\n      - run: npm test",
+      "interview": "CI/CD automates testing and deployment, so every code push is checked and released quickly with fewer bugs."
+    }
+  ],
+  "comparison": [
+    {
+      "title": "Flexbox vs Grid",
+      "definitions": "Flexbox arranges items in one direction (a row or a column). Grid arranges items in rows and columns together.",
+      "difference": "Flexbox is 1-dimensional / Grid is 2-dimensional.\nFlexbox follows the content size / Grid follows the layout you define.\nFlexbox suits small parts / Grid suits full pages.",
+      "analogy": "Flexbox is people standing in one queue. Grid is seats in a cinema hall with rows and columns.",
+      "when": "Flexbox for navbars and buttons. Grid for page layouts and galleries.",
+      "example": ".nav { display: flex; gap: 10px; }\n.gallery {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n}",
+      "interview": "Flexbox lays out items in one dimension, Grid handles rows and columns together, so I use Flexbox for components and Grid for page layouts."
+    },
+    {
+      "title": "var vs let vs const",
+      "definitions": "var is the old way, function-scoped. let is block-scoped and can change. const is block-scoped and cannot be reassigned.",
+      "difference": "var leaks outside blocks / let and const stay inside { }.\nvar and let can be reassigned / const cannot.\nvar is hoisted as undefined / let and const give an error if used early.",
+      "analogy": "var is a notice on the school's common board that anyone can edit. let is a page in your notebook you can erase. const is a printed page you cannot replace.",
+      "when": "const by default, let when the value changes, avoid var.",
+      "example": "const pi = 3.14; // pi = 3 -> error\nlet score = 0; // score = 1 -> OK\nif (true) { var a = 1; let b = 2; }\nconsole.log(a); // 1 (leaks) | b -> error",
+      "interview": "var is function-scoped and hoisted, while let and const are block-scoped, and I use const by default and let only when the value changes."
+    },
+    {
+      "title": "== vs ===",
+      "definitions": "== compares values after converting types. === compares value and type, with no conversion.",
+      "difference": "== converts types first / === never converts.\n== can give surprising results / === is predictable.\n== is loose / === is strict.",
+      "analogy": "== checks only the name on the ticket. === checks the name and the ID card.",
+      "when": "=== almost always. == only if you really want type conversion.",
+      "example": "5 == \"5\"   // true\n5 === \"5\"  // false\n0 == false // true\n0 === false // false",
+      "interview": "== checks value with type conversion, === checks both value and type, so I always use === to avoid bugs."
+    },
+    {
+      "title": "GET vs POST vs PUT vs PATCH vs DELETE",
+      "definitions": "GET reads data. POST creates new data. PUT replaces whole data. PATCH changes part of the data. DELETE removes data.",
+      "difference": "GET only reads / POST creates a new item each time.\nPUT replaces all fields / PATCH updates only the given fields.\nDELETE removes the item.",
+      "analogy": "A library. GET = look at a book. POST = add a new book. PUT = swap the whole book for a new edition. PATCH = fix one page. DELETE = remove the book.",
+      "when": "Match the action: view (GET), add (POST), full update (PUT), small update (PATCH), remove (DELETE).",
+      "example": "GET /users/1 -> read user 1\nPOST /users -> create user\nPUT /users/1 -> replace user 1\nPATCH /users/1 -> change email only\nDELETE /users/1 -> delete user 1",
+      "interview": "GET reads, POST creates, PUT replaces, PATCH partially updates, and DELETE removes, and together they map to CRUD in a REST API."
+    },
+    {
+      "title": "Authentication vs Authorization",
+      "definitions": "Authentication checks who you are. Authorization checks what you are allowed to do.",
+      "difference": "Authentication comes first / Authorization comes after.\nAuthentication uses password, OTP, or token / Authorization uses roles and permissions.\nFailed authentication gives 401 / failed authorization gives 403.",
+      "analogy": "At an airport, the passport check proves who you are (authentication). Your boarding pass decides which gate and seat you get (authorization).",
+      "when": "Authentication at login. Authorization on every protected route.",
+      "example": "// Authentication: is the token valid?\n// Authorization: is this user an admin?\napp.delete(\"/users/:id\", verifyToken, isAdmin, del);",
+      "interview": "Authentication verifies identity, authorization decides access, and I use JWT for the first and role checks for the second."
+    },
+    {
+      "title": "SQL vs NoSQL",
+      "definitions": "SQL databases store data in tables with fixed columns. NoSQL databases store data in flexible formats like JSON documents.",
+      "difference": "SQL has a fixed schema / NoSQL has a flexible schema.\nSQL links data with JOINs / NoSQL often stores related data together.\nSQL: MySQL, PostgreSQL / NoSQL: MongoDB.",
+      "analogy": "SQL is an Excel sheet with fixed columns. NoSQL is a folder of notes where every note can look different.",
+      "when": "SQL for structured data with relations, like banking and orders. NoSQL for fast-changing or flexible data, like chats and content.",
+      "example": "SQL: SELECT * FROM users WHERE city='Bhopal';\nNoSQL: db.users.find({ city: \"Bhopal\" })",
+      "interview": "SQL uses structured tables with relations, NoSQL uses flexible documents, and I choose based on how structured and connected my data is."
+    },
+    {
+      "title": "Props vs State",
+      "definitions": "Props are data passed from a parent to a child component. State is data a component owns and can change itself.",
+      "difference": "Props are read-only / state can be updated.\nProps come from outside / state lives inside.\nChanging state re-renders the component.",
+      "analogy": "Props are a filled form handed to you, and you cannot edit it. State is your own diary, and you can write in it anytime.",
+      "when": "Props to send data down to children. State for data that changes inside a component.",
+      "example": "function Hi({ name }) {        // props\n  const [n, setN] = useState(0); // state\n  return <p>{name} {n}</p>;\n}",
+      "interview": "Props are read-only data passed from the parent, while state is internal data that can change and triggers a re-render."
+    },
+    {
+      "title": "Cookies vs localStorage vs sessionStorage",
+      "definitions": "Cookies are small data sent to the server with every request. localStorage keeps data in the browser until it is deleted. sessionStorage keeps data only until the tab closes.",
+      "difference": "Cookies are about 4KB and sent to the server / the other two are about 5MB and stay in the browser.\nCookies can expire / localStorage never expires / sessionStorage ends with the tab.\nCookies can be httpOnly (safer from JS access).",
+      "analogy": "A cookie is a wristband the staff checks at every entry. localStorage is a locker at home that stays forever. sessionStorage is a sticky note thrown away when you leave.",
+      "when": "Cookies for login sessions. localStorage for theme or settings. sessionStorage for temporary data.",
+      "example": "localStorage.setItem(\"theme\", \"dark\");\nsessionStorage.setItem(\"step\", \"2\");\ndocument.cookie = \"token=abc; max-age=3600\";",
+      "interview": "Cookies go to the server and suit auth, localStorage persists in the browser, and sessionStorage lasts only for the tab."
+    },
+    {
+      "title": "Arrow vs Normal Function",
+      "definitions": "A normal function is the classic function keyword form. An arrow function is a shorter form using =>.",
+      "difference": "Arrow has a short syntax / normal is longer.\nArrow has no own this / normal has its own this.\nArrow cannot be used as a constructor / normal can.",
+      "analogy": "A normal function is an employee with their own ID card (this). An arrow function borrows the ID card of the manager outside.",
+      "when": "Arrow for callbacks and short functions. Normal for object methods and constructors.",
+      "example": "function add(a, b) { return a + b; }\nconst add2 = (a, b) => a + b;",
+      "interview": "Arrow functions are shorter and take this from the surrounding scope, while normal functions have their own this and can be constructors."
+    },
+    {
+      "title": "Controlled vs Uncontrolled Components",
+      "definitions": "In a controlled component, React state controls the input value. In an uncontrolled component, the DOM keeps the value and you read it with a ref.",
+      "difference": "Controlled: state is the single source of truth / uncontrolled: the DOM is.\nControlled updates on every keystroke / uncontrolled is read when needed.\nControlled makes validation easy.",
+      "analogy": "Controlled is a teacher checking every word as you write. Uncontrolled is writing on your own paper and showing it at the end.",
+      "when": "Controlled for forms with validation. Uncontrolled for simple forms or file inputs.",
+      "example": "// Controlled\n<input value={name} onChange={e => setName(e.target.value)} />\n// Uncontrolled\n<input ref={inputRef} />",
+      "interview": "Controlled inputs are driven by React state, uncontrolled inputs keep their own value in the DOM, and I prefer controlled for validation."
+    },
+    {
+      "title": "Primary Key vs Foreign Key",
+      "definitions": "A primary key uniquely identifies each row in a table. A foreign key is a column that points to the primary key of another table.",
+      "difference": "Primary key is unique and cannot be null / foreign key can repeat and can be null.\nOnly one primary key per table / a table can have many foreign keys.\nPrimary key identifies rows / foreign key links tables.",
+      "analogy": "A primary key is your roll number in your school. A foreign key is that roll number written on your library card to link it to you.",
+      "when": "Primary key in every table. Foreign key whenever one table refers to another.",
+      "example": "CREATE TABLE users(id INT PRIMARY KEY, name TEXT);\nCREATE TABLE orders(\n  id INT PRIMARY KEY,\n  user_id INT REFERENCES users(id)\n);",
+      "interview": "A primary key uniquely identifies a row, and a foreign key links a row to the primary key of another table to create relationships."
+    },
+    {
+      "title": "git merge vs git rebase",
+      "definitions": "Merge joins two branches and keeps both histories. Rebase moves your commits on top of the latest branch to make one straight history.",
+      "difference": "Merge creates a merge commit / rebase does not.\nMerge keeps the real history / rebase rewrites it into a straight line.\nMerge is safe for shared branches / rebase is risky on shared branches.",
+      "analogy": "Merge is joining two roads at a junction. Rebase is rebuilding your road as if it was built after the other one.",
+      "when": "Merge for shared branches like main. Rebase to clean up your own local branch before a pull request.",
+      "example": "git checkout feature\ngit merge main   # join with a merge commit\ngit rebase main  # replay my commits on top",
+      "interview": "Merge keeps full history with a merge commit, rebase creates a clean linear history, and I never rebase shared branches."
+    },
+    {
+      "title": "CSR vs SSR",
+      "definitions": "In CSR (Client-Side Rendering), the browser builds the page using JavaScript. In SSR (Server-Side Rendering), the server builds the HTML and sends a ready page.",
+      "difference": "CSR has a slower first load / SSR has a faster first load.\nCSR is weaker for SEO / SSR is better for SEO.\nCSR feels smooth after loading / SSR needs more server work.",
+      "analogy": "CSR is flat-pack furniture delivered to your home, and you assemble it. SSR is furniture delivered fully assembled.",
+      "when": "CSR for dashboards and web apps. SSR for blogs, shops, and SEO-heavy pages.",
+      "example": "CSR: React app (Create React App / Vite)\nSSR: Next.js page, HTML ready from server",
+      "interview": "CSR renders in the browser and suits apps, SSR renders on the server and suits SEO and fast first load, like React versus Next.js."
+    },
+    {
+      "title": "Sync vs Async Code",
+      "definitions": "Synchronous code runs one task at a time and waits for each. Asynchronous code starts a task and moves on, then handles the result later.",
+      "difference": "Sync blocks everything while waiting / async does not block.\nSync runs in order / async finishes when ready.\nAsync uses callbacks, Promises, or async/await.",
+      "analogy": "Sync is standing in the counter queue until your order is ready. Async is taking a token, sitting down, and being called when it is ready.",
+      "when": "Sync for quick simple steps. Async for slow tasks like API calls, files, and timers.",
+      "example": "console.log(\"1\");\nsetTimeout(() => console.log(\"2\"), 1000);\nconsole.log(\"3\");\n// Output: 1 3 2",
+      "interview": "Sync code blocks until each task finishes, async code lets other work continue, and I use async for API calls so the app stays responsive."
+    },
+    {
+      "title": "HTTP vs HTTPS",
+      "definitions": "HTTP sends data as plain text. HTTPS sends data encrypted using SSL/TLS.",
+      "difference": "HTTP is not secure / HTTPS is secure.\nHTTP data can be read by attackers / HTTPS data is encrypted.\nHTTP uses port 80 / HTTPS uses port 443 and needs a certificate.",
+      "analogy": "HTTP is a postcard that anyone can read on the way. HTTPS is a sealed, locked envelope.",
+      "when": "HTTPS for every real website, especially login and payments. HTTP only for local development.",
+      "example": "http://mysite.com  -> not secure\nhttps://mysite.com -> padlock, encrypted",
+      "interview": "HTTPS is HTTP with SSL/TLS encryption, which protects data from being read or changed, so I always use it in production."
+    },
+    {
+      "title": "Git vs GitHub",
+      "definitions": "Git is a tool on your computer that tracks changes in your code. GitHub is a website that stores Git projects online so teams can share them.",
+      "difference": "Git works offline on your computer / GitHub is online.\nGit tracks versions / GitHub adds sharing, pull requests, and collaboration.\nGit is the tool / GitHub is a service built around it.",
+      "analogy": "Git is a camera that takes snapshots of your work. GitHub is an online album where you upload and share them.",
+      "when": "Git for tracking your code locally. GitHub to back up, share, and collaborate.",
+      "example": "git commit -m \"add login\"  # Git (local)\ngit push origin main        # send to GitHub",
+      "interview": "Git is the version control tool that tracks my code locally, and GitHub is the online platform where I host and collaborate on Git repositories."
+    }
+  ],
+  "process": [
+    {
+      "title": "Promises and async/await",
+      "overview": "A Promise is an object that represents a result that will arrive later. async/await is a cleaner way to write code that uses Promises.",
+      "analogy": "Ordering food at a restaurant. You get a token (the Promise). Later the food is either served (resolved) or the dish is not available (rejected).",
+      "flow": "1. You start a slow task (like an API call) and get a Promise.\n2. The Promise is in the pending state.\n3. When the task ends, it becomes fulfilled (success) or rejected (error).\n4. .then() handles success and .catch() handles error.\n5. With async/await, you write await to pause that function until the Promise finishes.",
+      "example": "async function getUsers() {\n  try {\n    const res = await fetch(\"/api/users\");\n    const data = await res.json();\n    console.log(data);\n  } catch (err) {\n    console.log(\"Error:\", err);\n  }\n}",
+      "mistake": "Forgetting await, so you get a Promise instead of the real data. Also forgetting try/catch.",
+      "interview": "A Promise represents a future result with pending, fulfilled, or rejected states, and async/await lets me write that async code in a clean, readable way."
+    },
+    {
+      "title": "How does JWT work",
+      "overview": "JWT (JSON Web Token) is a signed token that proves who the user is, so the server does not need to remember the login.",
+      "analogy": "A movie ticket. You buy it once at the counter (login). After that you just show the ticket at the gate, and the guard checks the stamp.",
+      "flow": "1. User sends email and password to the server.\n2. Server checks them and creates a token signed with a secret key.\n3. Server sends the token to the client.\n4. Client stores it and sends it with every request (in the Authorization header).\n5. Server verifies the signature and allows or blocks the request.",
+      "example": "// Create token on login\nconst token = jwt.sign({ id: user._id }, SECRET, { expiresIn: \"1h\" });\n// Verify on later requests\nconst data = jwt.verify(token, SECRET);\n// A JWT has 3 parts: header.payload.signature",
+      "mistake": "Putting passwords or secrets inside the token. The payload can be read by anyone, only the signature is protected.",
+      "interview": "After login the server issues a signed JWT, the client sends it with each request, and the server verifies the signature to authenticate the user without storing sessions."
+    },
+    {
+      "title": "Error handling in Express",
+      "overview": "Express lets you catch errors in one central place, so the app does not crash and the user gets a clean message.",
+      "analogy": "A school complaint box. Every class drops problems in the same box, and one office handles them all.",
+      "flow": "1. A route runs and something fails.\n2. You catch the error with try/catch (or pass it with next(err)).\n3. Express skips normal routes and jumps to the error middleware.\n4. The error middleware has 4 parameters: (err, req, res, next).\n5. It sends a proper status code and message to the client.",
+      "example": "app.get(\"/user/:id\", async (req, res, next) => {\n  try {\n    const user = await User.findById(req.params.id);\n    res.json(user);\n  } catch (err) { next(err); }\n});\n\napp.use((err, req, res, next) => {\n  res.status(500).json({ message: err.message });\n});",
+      "mistake": "Placing the error middleware before the routes. It must come last. Also not using try/catch in async routes.",
+      "interview": "I catch errors in routes with try/catch, pass them using next(err), and handle them in one central error middleware that returns the right status code."
+    },
+    {
+      "title": "What happens when you enter a URL",
+      "overview": "The browser finds the server for that address, asks for the page, and then shows it on your screen.",
+      "analogy": "Sending a letter. You write a name (domain), the post office finds the house address (DNS), the letter reaches the house, and a reply comes back.",
+      "flow": "1. Browser checks the cache for a saved copy.\n2. DNS converts the domain (google.com) into an IP address.\n3. Browser connects to the server (TCP, plus TLS if HTTPS).\n4. Browser sends an HTTP request (GET).\n5. Server sends back a response (HTML, CSS, JS).\n6. Browser builds the DOM, applies CSS, runs JS, and shows the page.",
+      "example": "URL: https://example.com\nDNS -> 93.184.216.34\nGET / -> server\n200 OK + HTML -> browser renders page",
+      "mistake": "Skipping DNS and rendering. Interviewers expect both the network part and the browser part.",
+      "interview": "The browser resolves the domain to an IP using DNS, connects to the server, sends an HTTP request, receives the response, and then renders the HTML, CSS, and JavaScript."
+    },
+    {
+      "title": "How do you debug a failing API / full-stack bug",
+      "overview": "Debugging means checking each layer in order to find where the request breaks, instead of guessing.",
+      "analogy": "A courier parcel that did not arrive. You check the sender, then the tracking route, then the delivery office, then the warehouse.",
+      "flow": "1. Frontend: Open browser Console. Check the URL, method, and body you send.\n2. Network: Open the Network tab. Read the status code (400, 401, 404, 500) and the response message.\n3. Backend: Check server logs. Add console.log in the route and middleware. Verify the route path and method.\n4. Database: Check the connection, the query, and whether the data exists.\n5. Isolate: Test the API alone in Postman. If it works there, the bug is in the frontend.",
+      "example": "Network tab: POST /api/login -> 401\nPostman: same request -> 401\nServer log: \"JWT missing\"\nFix: send the Authorization header",
+      "mistake": "Changing code randomly without reading the status code and the error message first.",
+      "interview": "I debug layer by layer: browser console, Network tab status code, server logs, then the database, and I test the API in Postman to isolate where it fails."
+    }
+  ],
+  "multiple": [
+    {
+      "title": "HTTP Status Codes",
+      "purpose": "The server uses a 3-digit number to tell the client what happened to its request.",
+      "analogy": "Ordering at a restaurant. The waiter replies with a short message about your order.",
+      "items": "200 OK: Request worked. Waiter: \"Here is your food.\" GET /users -> 200\n\n201 Created: New item was made. \"Your order is placed.\" POST /users -> 201\n\n204 No Content: Done, nothing to send back. \"Table cleared.\" DELETE /users/1 -> 204\n\n301 Moved Permanently: Page has a new address. \"We moved to a new branch.\" old-url -> new-url\n\n400 Bad Request: Client sent wrong data. \"Your order is unclear.\" Missing email -> 400\n\n401 Unauthorized: Not logged in. \"Show your membership card.\" No token -> 401\n\n403 Forbidden: Logged in, but not allowed. \"This room is staff only.\" User opens admin -> 403\n\n404 Not Found: Item does not exist. \"That dish is not on the menu.\" GET /users/999 -> 404\n\n500 Internal Server Error: Server broke. \"The kitchen caught fire.\" Bug in code -> 500",
+      "example": "app.post(\"/users\", (req, res) => {\n  if (!req.body.email)\n    return res.status(400).json({ msg: \"Email required\" });\n  res.status(201).json({ msg: \"User created\" });\n});",
+      "memory": "2xx = Success, 3xx = Redirect, 4xx = Client's fault, 5xx = Server's fault.",
+      "interview": "Status codes tell the client the result of a request: 2xx success, 3xx redirect, 4xx client error like 401 and 404, and 5xx server error."
+    },
+    {
+      "title": "map / filter / reduce / forEach",
+      "purpose": "These array methods let you loop over a list and work on each item without writing a manual for loop.",
+      "analogy": "A fruit factory conveyor belt. Fruits (array items) pass through different machines.",
+      "items": "forEach: Does something with each item, returns nothing. A worker looks at each fruit and notes it. [1,2].forEach(x => console.log(x))\n\nmap: Changes each item and returns a new array of the same size. A machine polishes every fruit. [1,2,3].map(x => x * 2) // [2,4,6]\n\nfilter: Keeps only items that pass a test. A machine removes rotten fruits. [1,2,3,4].filter(x => x > 2) // [3,4]\n\nreduce: Combines all items into one value. A machine crushes all fruits into one juice. [1,2,3].reduce((sum, x) => sum + x, 0) // 6",
+      "example": "const prices = [100, 200, 300, 400];\nconst total = prices\n  .filter(p => p > 100)        // [200,300,400]\n  .map(p => p * 2)             // [400,600,800]\n  .reduce((s, p) => s + p, 0); // 1800",
+      "memory": "forEach = do, map = change, filter = keep, reduce = one result.",
+      "interview": "forEach runs code for each item, map transforms and returns a new array, filter keeps matching items, and reduce combines everything into a single value."
+    },
+    {
+      "title": "SQL Joins",
+      "purpose": "Joins combine rows from two tables using a matching column, so you can read related data together.",
+      "analogy": "Two class lists: Students (left) and Marks (right). The join decides who appears in the final list.",
+      "items": "INNER JOIN: Only students who have marks. Only people on both lists. A INNER JOIN B\n\nLEFT JOIN: All students, with marks if available (else NULL). Everyone from the Students list. A LEFT JOIN B\n\nRIGHT JOIN: All marks, with the student if available (else NULL). Everyone from the Marks list. A RIGHT JOIN B\n\nFULL JOIN: Everyone from both lists, with NULL where no match. Combine both lists fully. A FULL JOIN B",
+      "example": "SELECT s.name, m.score\nFROM students s\nLEFT JOIN marks m\n  ON s.id = m.student_id;\n-- Students without marks show score = NULL",
+      "memory": "INNER = both, LEFT = all left, RIGHT = all right, FULL = all of both.",
+      "interview": "INNER JOIN returns only matching rows, LEFT and RIGHT keep all rows from one side, and FULL JOIN keeps all rows from both tables."
+    },
+    {
+      "title": "ACID Properties",
+      "purpose": "ACID rules make sure database transactions (a group of steps treated as one task) stay safe and correct, even if something fails.",
+      "analogy": "A bank transfer of Rs 500 from Ravi to Sita.",
+      "items": "Atomicity: All steps happen, or none. Money leaves Ravi and reaches Sita, or nothing moves. Failure -> ROLLBACK\n\nConsistency: Data stays valid after the transaction. Total money in the bank stays the same, no negative rule broken. Balance never below 0\n\nIsolation: Transactions do not disturb each other. Two transfers at the same time do not mix up balances. Each runs as if alone\n\nDurability: Saved data stays saved. After \"transfer successful\", a power cut does not erase it. COMMIT -> permanent",
+      "example": "BEGIN;\nUPDATE accounts SET bal = bal - 500 WHERE name = 'Ravi';\nUPDATE accounts SET bal = bal + 500 WHERE name = 'Sita';\nCOMMIT; -- if any step fails: ROLLBACK",
+      "memory": "All or nothing, Correct data, Independent, Durable (saved forever).",
+      "interview": "ACID stands for Atomicity, Consistency, Isolation, and Durability, and it guarantees that database transactions are reliable, like a safe bank transfer."
+    }
+  ]
+}
